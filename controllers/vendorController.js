@@ -23,9 +23,11 @@ module.exports.addItem =  async (req, res) => {
         const userRole = decodedToken.userRole
         const product = req.body.product
         const stock = product.stock==="Available"? 1:0;
-        console.log(product)
+        
         
         if (userRole==='vendor'){
+            console.log(product)
+            console.log(resId)
             const item = await new Menu({
                 resId: resId,
                 name: product.name,
@@ -37,6 +39,7 @@ module.exports.addItem =  async (req, res) => {
             })
             await item.save()
             .then((result) => {
+                
                 res.status(201).send({
                     message: "Item added successfully"
                 })
