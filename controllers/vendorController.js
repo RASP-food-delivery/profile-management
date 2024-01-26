@@ -26,8 +26,6 @@ module.exports.addItem =  async (req, res) => {
         
         
         if (userRole==='vendor'){
-            console.log(product)
-            console.log(resId)
             const item = await new Menu({
                 resId: resId,
                 name: product.name,
