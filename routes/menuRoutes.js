@@ -1,4 +1,5 @@
-const controller = require("../controllers/vendorController")
+const controller = require("../controllers/itemController")
+const auth = require("../auth");
 
 const router = require("express").Router();
 
@@ -15,6 +16,7 @@ router.route("/items/:resId")
 
 router.route("/items/:resId/:name")
 
-.delete(controller.deleteSingle);
+.delete(controller.deleteSingle)
+.put(controller.updateItem);
 
 module.exports = router

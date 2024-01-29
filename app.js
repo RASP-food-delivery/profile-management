@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const dbConnect = require("./db/dbConnect");
 
-const userRoutes = require("./routes/vendorRoutes")
+const menuRoutes = require("./routes/menuRoutes")
 
 // Curb Cores Error by adding a header here
 app.use((req, res, next) => {
@@ -28,6 +28,6 @@ app.use((req, res, next) => {
 
 dbConnect()
 
-app.use("/api/menu",userRoutes)
+app.use("/api/menu",menuRoutes)
 
 module.exports = app
