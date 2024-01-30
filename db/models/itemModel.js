@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require('dotenv').config()
 
-const root = process.env.FIREBASE_URL;
+const root = process.env.FIREBASE_URL_MENU;
 
 // the schema for menu items
 
@@ -40,7 +40,8 @@ const MenuSchema = new mongoose.Schema({
   },
   img: {
     type: String,
-    get: v => `${root}${v}`
+    get: v => `${root}${v}`,
+    default: "unavailable.jpg?alt=media&token=b336c0cf-c575-4c99-b60b-c8d078dab2be"
   }
 },
 {

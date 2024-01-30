@@ -23,18 +23,28 @@ module.exports.addItem =  async (req, res) => {
         const userRole = decodedToken.userRole
         const product = req.body.product
         const stock = product.stock==="Available"? 1:0;
-        
+        const addItem = typeof product.img !== 'undefined'? 
+        {
+            resId: resId,
+            name: product.name,
+            price: product.price,
+            description: product.description,
+            availability: stock,
+            category: product.category,
+            img: product.img
+        } : 
+        {
+            resId: resId,
+            name: product.name,
+            price: product.price,
+            description: product.description,
+            availability: stock,
+            category: product.category,
+        };
+
         
         if (userRole==='vendor'){
-            const item = await new Menu({
-                resId: resId,
-                name: product.name,
-                price: product.price,
-                description: product.description,
-                availability: stock,
-                category: product.category,
-                img: product.img
-            })
+            const item = await new Menu(addItem)
             await item.save()
             .then((result) => {
                 
@@ -103,8 +113,51 @@ module.exports.deleteRestaurantItems = async (req, res) => {
 
 module.exports.deleteSingle = async (req, res) => {
         Menu.deleteOne({resId: req.params.resId, name: req.params.name}).then(
-            console.log("Food item deleted successfully.")
-        ).catch(
-            console.log("Could not delete item.")
+            res.status(201).send(
+                {message: "Item deleted."}
+            )
+        ).catch((error) => {
+            res.status(400).send({
+                message: "Could not delete item.",
+                error: error 
+            })
+        }
         )
     }
+
+module.exports.updateItem = async (req,res) => {
+        const token = req.body.token
+        const decodedToken = jwt.decode(token, "RANDOM-TOKEN");
+        const resId = req.params.resId
+        const userRole = decodedToken.userRole
+        const product = req.body.product
+        const stock = product.stock==="Available"? 1:0;
+        const name = req.params.name
+        if (userRole==='vendor'){
+            const item = {
+                resId: resId,
+                name: product.name,
+                price: product.price,
+                description: product.description,
+                availability: stock,
+                category: product.category,
+                img: product.img
+            }
+            const updatedItem = await Menu.findOneAndUpdate(
+                { resId: resId, name: name },
+                item,
+                { new: true } 
+            );
+            if(updatedItem){
+                res.status(201).send(
+                    {message: "Item edited."}
+                )
+            }
+            else  {
+                res.status(401).send({ message: "Unauthorized" });
+            }
+            
+        } else{
+            console.log("unauthorized")
+        }
+}
