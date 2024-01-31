@@ -47,6 +47,7 @@ module.exports.addItem =  async (req, res) => {
             const item = await new Menu(addItem)
             await item.save()
             .then((result) => {
+                
                 res.status(201).send({
                     message: "Item added successfully"
                 })
