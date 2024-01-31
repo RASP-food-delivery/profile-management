@@ -15,3 +15,20 @@ module.exports.updateImage = async (req, res) =>{
         res.status(401).send({ message: "Unauthorized" });
     }
 }
+
+module.exports.VendorInfo = async (req,res) => {
+    const vendorId = req.params.resId
+    Vendor.find({_id: vendorId}).then((docs) => {
+        res.status(200).send(docs)
+    }).catch((error)=>{
+        res.status(400).send(
+            
+            {
+                message: "Vendor does not exist.",
+                error: error
+            }
+        )
+        }
+        
+    )
+}
