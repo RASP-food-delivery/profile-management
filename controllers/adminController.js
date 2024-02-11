@@ -42,7 +42,7 @@ module.exports.verifyVendor = async (req, res) => {
 }
 
 module.exports.deleteVendor = async (req, res) => {
-    Vendor.deleteOne({resId: req.params.resId}).then(
+    Vendor.deleteOne({_id: req.params.resId}).then(
         res.status(201).send(
             {message: "Restaurant deleted."}
         )
