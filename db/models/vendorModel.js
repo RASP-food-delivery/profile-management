@@ -36,6 +36,10 @@ const VendorSchema = new mongoose.Schema({
     type: String,
     get: v => `${root}${v}`,
     default: "unavailable.jpg?alt=media&token=6633cfd8-020f-4980-b895-b7ee78ff61bb"
+  },
+  isVerified : {
+    type : Boolean,
+    default : false,
   }
 },
 {
