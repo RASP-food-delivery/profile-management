@@ -1,4 +1,3 @@
-const Admin = require("../db/models/adminModel")
 const Vendor = require("../db/models/vendorModel")
 
 module.exports.displayUnverified = async (req, res) => {
