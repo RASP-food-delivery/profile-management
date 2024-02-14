@@ -54,7 +54,7 @@ module.exports.addItem =  async (req, res) => {
             })
             .catch((error) => {
                 res.status(500).send({
-                    message: "Error adding item",
+                    message: "Item already exists",
                     error
                 })
             })
@@ -66,6 +66,7 @@ module.exports.addItem =  async (req, res) => {
     } catch{
         res.status(401).json({
             error: new Error("Invalid request!"),
+            message: "Invalid request!"
           });
     }
 }
@@ -113,7 +114,7 @@ module.exports.deleteRestaurantItems = async (req, res) => {
 
 module.exports.deleteSingle = async (req, res) => {
         Menu.deleteOne({resId: req.params.resId, name: req.params.name}).then(
-            res.status(201).send(
+            res.status(200).send(
                 {message: "Item deleted."}
             )
         ).catch((error) => {
@@ -154,10 +155,10 @@ module.exports.updateItem = async (req,res) => {
                 )
             }
             else  {
-                res.status(401).send({ message: "Unauthorized" });
+                res.status(401).send({ message: "Could not edit item" });
             }
             
         } else{
-            console.log("unauthorized")
+            res.status(401).send({ message: "Unauthorized" });
         }
 }
