@@ -32,3 +32,15 @@ module.exports.VendorInfo = async (req,res) => {
         
     )
 }
+
+module.exports.getRestaurants = async (req, res)=> {
+    const input = req.body.restaurants;
+    await Vendor.find( { _id: { $in: input } }).
+    then((result) => {
+      return res.status(200).json(result);
+    }).catch((error)=>
+    {
+      return res.status(400).send(error)
+    }
+    )
+  }

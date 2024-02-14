@@ -6,4 +6,6 @@ router.patch("/imageUpdate/:resId", controller.updateImage)
 router.route("/:resId")
 .get(controller.VendorInfo)
 
+router.post("/getrestaurants", controller.getRestaurants);
+
 module.exports = router
